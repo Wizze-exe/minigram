@@ -9,10 +9,9 @@ public class MessageModel {
     public boolean isOutgoing;
     public boolean isImage;
 
-    public MessageModel(String message, String time, boolean isOutgoing, boolean isImage, Image image) {
+    public MessageModel(String message, boolean isOutgoing, boolean isImage, Image image) {
         this.image = image;
         this.message = message;
-        this.time = time;
         this.isOutgoing = isOutgoing;
         this.isImage = isImage;
     }

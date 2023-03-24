@@ -15,7 +15,7 @@ public class Network {
     public Consumer<Serializable> receiveCallBack;
     public String ip = "localhost";
     public boolean isServer;
-    public int port = 8189;
+    public int port = 8188;
 
     public Network(Consumer<Serializable> receiveCallBack, String ip, boolean isServer, int port) {
         this.receiveCallBack = receiveCallBack;
@@ -59,7 +59,7 @@ public class Network {
                 while (true) {
                     Serializable data = (Serializable) inputStream.readObject();
                     receiveCallBack.accept(data);
-
+                    break;
                 }
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
