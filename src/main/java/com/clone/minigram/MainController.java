@@ -13,10 +13,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.paint.Paint;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
@@ -46,21 +46,27 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         String name = "Chat";
-        usersList.add(new UserModel(name, "message ", 0 + ""));
+        usersList.add(new UserModel(name, "message "));
+        
+        Color messagesColor = Color.rgb(161, 136, 168);
+        Color usersColor = Color.rgb(34, 30, 42);
 
 
-        localUser = new UserModel(LoginController.userName, "message", 0 + "");
+        localUser = new UserModel(LoginController.userName, "message");
+        usersList.add(localUser);
         chatNameLabel.setText(localUser.getUserName());
 
         usersListView.setItems(usersList);
         usersListView.setCellFactory(param -> new UserCellController() {
             {
                 prefWidthProperty().bind(usersListView.widthProperty().subtract(0));
+                backgroundProperty().setValue(Background.fill(usersColor));
             }
         });
         messageListView.setCellFactory(param -> new MessageCellController() {
             {
                 prefWidthProperty().bind(messageListView.widthProperty().subtract(0)); // 1
+                backgroundProperty().setValue(Background.fill(messagesColor));
             }
         });
         usersListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -68,7 +74,7 @@ public class MainController implements Initializable {
                     messageListView.setItems(selectedUser.messagesList);
                     chatNameLabel.setText(selectedUser.userName);
                     messageListView.scrollTo(selectedUser.messagesList.size());
-                }
+            }
         );
 
         con = new Network(data -> Platform.runLater(() -> {
@@ -84,7 +90,6 @@ public class MainController implements Initializable {
                 }
                 usersList.get(userSender).messagesList.add(new MessageModel(messageInfo[3],false, image != null, image));
                 messageListView.scrollTo(selectedUser.messagesList.size());
-                usersList.get(userSender).notificationNumber.setValue((Integer.valueOf(selectedUser.notificationNumber.getValue()) + 1) + "");
                 System.out.println("Sender: " + usersList.get(userSender).userName
                         + "\n" + "Receiver: " + localUser.getUserName()
                         + "\n" + "Image : " + image + messageInfo[0]);
@@ -95,24 +100,25 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    void sendMessage(ActionEvent event){
+    void sendMessage(){
         try {
             selectedUser.messagesList.add(new MessageModel(messageField.getText(), true, false, null));
-            con.sendData("text>" + localUser.getUserName() + ">" + selectedUser.getUserName());
             messageField.clear();
             messageListView.scrollTo(selectedUser.messagesList.size());
+            con.sendData("text>" + localUser.getUserName() + ">" + selectedUser.getUserName());
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    void attachFile(MouseEvent event) {
+    @FXML
+    void attachFile(ActionEvent event) {
         try {
             FileChooser fileChooser = new FileChooser();
             File imageFile = fileChooser.showOpenDialog(new Stage());
             BufferedImage bufferedImage = ImageIO.read(imageFile);
             Image image = SwingFXUtils.toFXImage(bufferedImage, null);
-            selectedUser.messagesList.add(new MessageModel("", false, true, image));
+            selectedUser.messagesList.add(new MessageModel("", true, true, image));
             messageListView.scrollTo(selectedUser.messagesList.size());
         } catch (IOException e) {
             e.printStackTrace();
@@ -126,5 +132,11 @@ public class MainController implements Initializable {
             }
         }
         return -1;
+    }
+
+    public void sendByEnter(KeyEvent keyEvent) {
+        if (keyEvent.getCode().equals(KeyCode.ENTER)){
+            sendMessage();
+        }
     }
 }

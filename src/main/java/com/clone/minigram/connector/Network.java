@@ -59,7 +59,6 @@ public class Network {
                 while (true) {
                     Serializable data = (Serializable) inputStream.readObject();
                     receiveCallBack.accept(data);
-                    break;
                 }
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();

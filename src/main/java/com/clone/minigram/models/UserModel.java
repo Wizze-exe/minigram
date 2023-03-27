@@ -7,13 +7,11 @@ import javafx.collections.ObservableList;
 public class UserModel {
     public String userName;
     public SimpleStringProperty lastMessage;
-    public SimpleStringProperty notificationNumber;
     public ObservableList<MessageModel> messagesList;
 
-    public UserModel(String userName, String lastMessage, String notificationNumber) {
+    public UserModel(String userName, String lastMessage) {
         this.userName = userName;
         this.lastMessage = new SimpleStringProperty(lastMessage);
-        this.notificationNumber = new SimpleStringProperty(notificationNumber);
         messagesList = FXCollections.observableArrayList();
     }
 
@@ -35,17 +33,5 @@ public class UserModel {
 
     public void setLastMessage(String lastMessage) {
         this.lastMessage.set(lastMessage);
-    }
-
-    public String getNotificationsNumber() {
-        return notificationNumber.get();
-    }
-
-    public SimpleStringProperty notificationsNumberProperty() {
-        return notificationNumber;
-    }
-
-    public void setNotificationsNumber(String notificationsNumber) {
-        this.notificationNumber.set(notificationsNumber);
     }
 }

@@ -5,7 +5,6 @@ import javafx.scene.image.Image;
 public class MessageModel {
     Image image;
     String message;
-    String time;
     public boolean isOutgoing;
     public boolean isImage;
 
@@ -24,10 +23,6 @@ public class MessageModel {
         return message;
     }
 
-    public String getTime() {
-        return time;
-    }
-
     public boolean isOutgoing() {
         return isOutgoing;
     }
@@ -38,10 +33,6 @@ public class MessageModel {
 
     public void setMessage(String message) {
         this.message = message;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
     }
 
     public void setOutgoing(boolean outgoing) {
