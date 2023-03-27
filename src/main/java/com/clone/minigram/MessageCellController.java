@@ -11,8 +11,11 @@ import javafx.scene.layout.GridPane;
 import java.io.IOException;
 
 public class MessageCellController extends ListCell<MessageModel> {
+    @FXML
     private GridPane root;
+    @FXML
     private ImageView imageView;
+    @FXML
     private Label messageLabel;
     @Override
     protected void updateItem(MessageModel item, boolean empty){

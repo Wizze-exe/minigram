@@ -20,12 +20,6 @@ public class UserCellController extends ListCell<UserModel> {
     @FXML
     private Label lastMessageLabel;
 
-    @FXML
-    private Label nombreMessageLabel;
-
-    @FXML
-    private StackPane notificationPanel;
-
     @Override
     protected void updateItem(UserModel item, boolean empty) {
         super.updateItem(item, empty);
@@ -42,10 +36,6 @@ public class UserCellController extends ListCell<UserModel> {
             }
             userNameLabel.setText(String.valueOf(item.getUserName()));
             lastMessageLabel.setText(String.valueOf(item.getLastMessage()));
-            if (!item.getNotificationsNumber().matches("0")) {
-                nombreMessageLabel.textProperty().bind(item.notificationsNumberProperty());
-                if (!notificationPanel.isVisible()) notificationPanel.setVisible(true);
-            }
             setGraphic(root);
         }
     }

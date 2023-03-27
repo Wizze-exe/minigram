@@ -14,6 +14,9 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.paint.Paint;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
@@ -27,9 +30,13 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
+    @FXML
     public ListView<UserModel> usersListView;
+    @FXML
     public Label chatNameLabel;
+    @FXML
     public ListView<MessageModel> messageListView;
+    @FXML
     public TextField messageField;
 
     Network con;
@@ -41,9 +48,6 @@ public class MainController implements Initializable {
         String name = "Chat";
         usersList.add(new UserModel(name, "message ", 0 + ""));
 
-        usersList.addAll(new UserModel("Jacob", "Congratulations", 1 + "")
-                , new UserModel("Leo", "Alright, thanks", 0 + "")
-                , new UserModel("Oscar", "I agree, when?", 2 + ""));
 
         localUser = new UserModel(LoginController.userName, "message", 0 + "");
         chatNameLabel.setText(localUser.getUserName());
@@ -87,7 +91,6 @@ public class MainController implements Initializable {
             }
         }), "localhost", name.matches("Chat"),8189);
         con.openConnection();
-
         usersListView.getSelectionModel().select(0);
     }
 
