@@ -13,7 +13,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable{
-    @FXML
     public static String userName;
     @FXML
     public TextField userNameTextField;
@@ -29,7 +28,16 @@ public class LoginController implements Initializable{
             userName = userNameTextField.getText();
             Parent root = FXMLLoader.load(getClass().getResource("mainView.fxml"));
             Scene scene = new Scene(root);
-            App.stage.setScene(scene);
+            try {
+                App.stage.setScene(scene);
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+            }
+            try {
+                App1.stage.setScene(scene);
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+            }
 
         } catch (IOException e) {
             e.printStackTrace();

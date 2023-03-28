@@ -6,7 +6,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
 
 import java.io.IOException;
 
@@ -34,7 +33,7 @@ public class UserCellController extends ListCell<UserModel> {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            userNameLabel.setText(String.valueOf(item.getUserName()));
+            userNameLabel.setText(String.valueOf(item.getUsername()));
             lastMessageLabel.setText(String.valueOf(item.getLastMessage()));
             setGraphic(root);
         }
